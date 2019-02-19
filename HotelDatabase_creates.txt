@@ -99,8 +99,10 @@ FROM HOTEL;
 
 
 --    Determine how many different guests have made bookings for some part of March 2009, for instance, bookings at any point between March 1st and March 31st (check in date on or after March 1st, and check out date on or before March 31st). 
---using between
-
+--using between DATE - format YYYY-MM-DD
+SELECT COUNT(G_guestNo)
+FROM BOOKING
+WHERE dateFrom BETWEEN '2019-03-1' AND '2019-03-15';
 --    Count how many hotels there are in each city.  
 
 --    List the hotelNo and average price of ‘Standard’ rooms at each hotel. 
