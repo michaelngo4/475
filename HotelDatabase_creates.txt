@@ -49,6 +49,13 @@ CREATE TABLE BOOKING (
 	CONSTRAINT dateOrder Check (dateFrom < dateTo)
 );
 
+--6 is Hilton
+--booking inserts
+insert into BOOKING values(6,1, '2019-02-20', '2019-02-21',1);
+insert into BOOKING values(6,3, '2019-01-01', '2019-01-02',2);
+insert into BOOKING values(1,2, '2019-02-20', '2019-02-21',1);
+
+
 --hotel inserts
 insert into HOTEL values (1, 'Death Inn', 'Seattle'); 
 insert into HOTEL values (2, 'Life Inn', 'Chicago'); 
@@ -71,6 +78,7 @@ insert into ROOM values (3, 3, 'Standard', 155.99);
 insert into ROOM values (1, 4, 'Standard', 189.99);
 insert into ROOM values (1, 5, 'Penthouse', 499.89);
 insert into ROOM values (1, 6, 'Single', 99.99);
+insert into ROOM values (2, 6, 'Single', 99.99);
 insert into ROOM values (1, 7, 'Standard', 167.99);
 insert into ROOM values (1, 8, 'Standard', 134.99);
 insert into ROOM values (1, 9, 'Standard', 59.99);
@@ -80,6 +88,7 @@ insert into GUEST values (1, "John Doe", "Seattle,Washington");
 insert into GUEST values (2, "Jane Doe", "Seattle, Washington");
 insert into GUEST values (3, "Person Name", "Portland, Oregon");
 insert into GUEST values (4, "PLACE HOLDER", "123456");
+
 
 --    QUERY 1
 --    Display all information in the hotel relation. 
@@ -130,7 +139,9 @@ GROUP BY H_hotelNo;
 --    CURRENT_DATE() or (DATETIME('now')) can be used in SQLLite
 --    need a union of guests (for guest name), bookings (for current stay), and hotel for hotel name
 --    Cannot union if column name isn't the same? (H_hotelNo vs hotelNo)
-SELECT H_hotelNo, G_guestNo, dateFrom, dateTo, 
+
+SELECT guestName
+FROM(SELECT H_hotelNo, G_guestNo, dateFrom, dateTo, 
 guestNo, guestName, 
 hotelNo, hotelName 
 FROM BOOKING, GUEST, HOTEL
@@ -138,9 +149,7 @@ WHERE dateFrom <= date('now') AND
 dateTo >= date('now') AND
 hotelName = 'Hilton' AND
 H_hotelNo = hotelNo AND 
-G_guestNo = guestNo
-GROUP BY guestName; 
-
+G_guestNo = guestNo) as tblHotelGuests;
 --    QUERY 9
 --    Count the number of rooms in each hotel in "Las Vegas" along with the name of the hotel.
 
