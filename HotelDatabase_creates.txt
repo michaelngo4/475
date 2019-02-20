@@ -73,48 +73,51 @@ insert into GUEST values (2, "Jane Doe", "Seattle, Washington");
 insert into GUEST values (3, "Person Name", "Portland, Oregon");
 insert into GUEST values (4, "PLACE HOLDER", "123456");
 
+--    QUERY 1
 --    Display all information in the hotel relation. 
-
 SELECT *
 FROM HOTEL;
 
+--    QUERY 2
 --    List the names and address of guests from Seattle.  Note that guestAddress includes the city, state, etc. 
 -- WHERE CustomerName LIKE '%or%' 	Finds any values that have "or" in any position
-
 SELECT guestName, guestAddress
 FROM GUEST
 WHERE guestAddress LIKE '%Seattle%';
 
+--    QUERY 3
 --    Modify query #2 to do the listing alphabetically by name 
-
 SELECT guestName, guestAddress
 FROM GUEST
 WHERE guestAddress LIKE '%Seattle%'
 ORDER BY guestName;
 
+--    QUERY 4
 --    Determine the number of hotels in the database. 
-
 SELECT COUNT(*)
 FROM HOTEL;
 
-
+--    QUERY 5
 --    Determine how many different guests have made bookings for some part of March 2009, for instance, bookings at any point between March 1st and March 31st (check in date on or after March 1st, and check out date on or before March 31st). 
 --    using between DATE - format YYYY-MM-DD
 SELECT COUNT(G_guestNo)
 FROM BOOKING
 WHERE dateFrom BETWEEN '2019-03-1' AND '2019-03-15';
 
+--    QUERY 6
 --    Count how many hotels there are in each city.  
 --    select hotels, group hotels by city
 SELECT COUNT(*)
 FROM HOTEL
 GROUP BY city;
 
+--    QUERY 7
 --    List the hotelNo and average price of ‘Standard’ rooms at each hotel. 
 SELECT H_hotelNo, AVG(price)
 FROM ROOM
 WHERE roomType LIKE '%Standard%';
 
+--    QUERY 8
 --    List the name of all guests currently staying at the Hilton (scroll down for ways of getting the date). 
 --    CURRENT_DATE() or (DATETIME('now')) can be used in SQLLite
 --    need a union of guests (for guest name), bookings (for current stay), and hotel for hotel name
@@ -130,6 +133,7 @@ G_guestNo = guestNo;
 
 
 
+--    QUERY 9
 --    Count the number of rooms in each hotel in "Las Vegas" along with the name of the hotel.
 
 --    Discussion
