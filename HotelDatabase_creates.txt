@@ -1,4 +1,4 @@
---By William Nguyen and Austin Green
+--By Will Nguyen, Austin Green, Michael Ngo, Collin Kong
 
 --Fixed some commas in the CREATE statements
 --looked at where parenthesis were.
