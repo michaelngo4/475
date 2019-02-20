@@ -154,6 +154,13 @@ G_guestNo = guestNo) as tblHotelGuests;
 --    Count the number of rooms in each hotel in "Las Vegas" along with the name of the hotel.
 
 --    Discussion
---    Is it better to regenerate the table or just update it?  Consider the situation when the table has not 20, but 20 million records. 
+--    Is it better to regenerate the table or just update it?  Consider the situation when the table has not 20, but 20 million records.
+--    It's better to update  much larger tables (especially with 20 million) as you wouldn't have to regenerate all the values which would be expensive in time and space. 
+
 --    What are the pros and cons of changing the table vs. re-creating it from scratch? 
+--	  Changing a table allows for less cost in computation and space. You won't have to recreate it.
+--    However, you have to change the values of the actual table, which you may not want to do. (you may just want to query or manipulate rather than changing the actual values)
+--    Re-creating a table allows us a lot more flexibility in manipulating the data how we need to without damaging the original set.
+
 --    What could you do if you were not allowed to re-create a table from scratch, i.e., you can only modify it?
+--    You would have to reverse your calculations and manipulation involved in any complex queries.
