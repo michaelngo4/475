@@ -5,7 +5,8 @@
 DROP TABLE ROOM;
 DROP TABLE BOOKING;
 
---Hotel        (hotelNo, hotelName, city)
+-- Hotel
+-- (hotelNo, hotelName, city)
 CREATE TABLE HOTEL(
     hotelNo INT NOT NULL, 
     hotelName VARCHAR(20), 
@@ -13,20 +14,22 @@ CREATE TABLE HOTEL(
     primary key(hotelNo)
 );
 
---Room        (roomNo, H_hotelNo, type, price)
+-- Room
+-- (roomNo, H_hotelNo, type, price)
 CREATE TABLE ROOM (
     roomNo INT NOT NULL, 
     H_hotelNo INT NOT NULL,
     roomType VARCHAR(10) DEFAULT 'Standard',
     price decimal(5,2) NOT NULL,
-primary key(roomNo, H_hotelNo),
-CONSTRAINT fkHotelNo FOREIGN key (H_hotelNo) References HOTEL (hotelNo),
-CONSTRAINT price_range CHECK (price BETWEEN 50.00 and 500.00),
-CONSTRAINT roomNo_range CHECK (roomNo BETWEEN 1 and 9999),
-CONSTRAINT roomTypes CHECK (roomType IN('Standard', 'Suite', 'Penthouse', 'Double', 'Single'))
+	primary key(roomNo, H_hotelNo),
+	CONSTRAINT fkHotelNo FOREIGN key (H_hotelNo) References HOTEL (hotelNo),
+	CONSTRAINT price_range CHECK (price BETWEEN 50.00 and 500.00),
+	CONSTRAINT roomNo_range CHECK (roomNo BETWEEN 1 and 9999),
+	CONSTRAINT roomTypes CHECK (roomType IN('Standard', 'Suite', 'Penthouse', 'Double', 'Single'))
 );
 
---Guest        (guestNo, guestName, guestAddress)
+-- Guest
+-- (guestNo, guestName, guestAddress)
 CREATE TABLE GUEST (
     guestNo INT NOT NULL,
     guestName VARCHAR(20) NOT NULL,
@@ -34,38 +37,43 @@ CREATE TABLE GUEST (
     primary key(guestNo)
 );
 
-CREATE TABLE BOOKING 
-(H_hotelNo INT NOT NULL,
-G_guestNo INT NOT NULL,
-dateFrom DATE NOT NULL,
-dateTo DATE NOT NULL,
-R_roomNo INT NOT NULL,
-primary key (H_hotelNo, G_guestNo, R_roomNo, dateFrom),
-foreign key(G_guestNo) References GUEST(guestNo),
-foreign key(R_roomNo, H_hotelNo) References ROOM(roomNo, H_hotelNo),
-CONSTRAINT dateOrder Check (dateFrom < dateTo)
+CREATE TABLE BOOKING (
+	H_hotelNo INT NOT NULL,
+	G_guestNo INT NOT NULL,
+	dateFrom DATE NOT NULL,
+	dateTo DATE NOT NULL,
+	R_roomNo INT NOT NULL,
+	primary key (H_hotelNo, G_guestNo, R_roomNo, dateFrom),
+	foreign key(G_guestNo) References GUEST(guestNo),
+	foreign key(R_roomNo, H_hotelNo) References ROOM(roomNo, H_hotelNo),
+	CONSTRAINT dateOrder Check (dateFrom < dateTo)
 );
 
 --hotel inserts
 insert into HOTEL values (1, 'Death Inn', 'Seattle'); 
-
 insert into HOTEL values (2, 'Life Inn', 'Chicago'); 
-
 insert into HOTEL values (3, 'Earth Inn', 'Olympia'); 
-
 insert into HOTEL values (4, 'World Inn', 'Bothell'); 
-
 insert into HOTEL values (5, 'Ocean Inn', 'Columbus'); 
-
 insert into HOTEL values (6, 'Hilton', 'Columbus'); 
-
 insert into HOTEL values (7, 'Ocean', 'Las Vegas'); 
-
 insert into HOTEL values (8, 'Ocean', 'Columbus'); 
-
 insert into HOTEL values (9, 'Ocean2', 'Las Vegas'); 
-
 insert into HOTEL values (10, 'Ocean3', 'Las Vegas'); 
+
+--room inserts
+insert into ROOM values (1, 1, 'Standard', 55.99);
+insert into ROOM values (2, 1, 'Standard', 155.99);
+insert into ROOM values (1, 2, 'Suite', 278.99);
+insert into ROOM values (1, 3, 'Standard', 144.99);
+insert into ROOM values (2, 3, 'Standard', 155.99);
+insert into ROOM values (3, 3, 'Standard', 155.99);
+insert into ROOM values (1, 4, 'Standard', 189.99);
+insert into ROOM values (1, 5, 'Penthouse', 499.89);
+insert into ROOM values (1, 6, 'Single', 99.99);
+insert into ROOM values (1, 7, 'Standard', 167.99);
+insert into ROOM values (1, 8, 'Standard', 134.99);
+insert into ROOM values (1, 9, 'Standard', 59.99);
 
 --guest inserts
 insert into GUEST values (1, "John Doe", "Seattle,Washington");
@@ -80,7 +88,6 @@ FROM HOTEL;
 
 --    QUERY 2
 --    List the names and address of guests from Seattle.  Note that guestAddress includes the city, state, etc. 
--- WHERE CustomerName LIKE '%or%' 	Finds any values that have "or" in any position
 SELECT guestName, guestAddress
 FROM GUEST
 WHERE guestAddress LIKE '%Seattle%';
@@ -102,7 +109,7 @@ FROM HOTEL;
 --    using between DATE - format YYYY-MM-DD
 SELECT COUNT(G_guestNo)
 FROM BOOKING
-WHERE dateFrom BETWEEN '2019-03-1' AND '2019-03-15';
+WHERE dateFrom BETWEEN '2019-03-01' AND '2019-03-15';
 
 --    QUERY 6
 --    Count how many hotels there are in each city.  
