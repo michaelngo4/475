@@ -99,19 +99,40 @@ FROM HOTEL;
 
 
 --    Determine how many different guests have made bookings for some part of March 2009, for instance, bookings at any point between March 1st and March 31st (check in date on or after March 1st, and check out date on or before March 31st). 
---using between DATE - format YYYY-MM-DD
+--    using between DATE - format YYYY-MM-DD
 SELECT COUNT(G_guestNo)
 FROM BOOKING
 WHERE dateFrom BETWEEN '2019-03-1' AND '2019-03-15';
+
 --    Count how many hotels there are in each city.  
+--    select hotels, group hotels by city
+SELECT COUNT(*)
+FROM HOTEL
+GROUP BY city;
 
 --    List the hotelNo and average price of ‘Standard’ rooms at each hotel. 
+SELECT H_hotelNo, AVG(price)
+FROM ROOM
+WHERE roomType LIKE '%Standard%';
 
 --    List the name of all guests currently staying at the Hilton (scroll down for ways of getting the date). 
+--    CURRENT_DATE() or (DATETIME('now')) can be used in SQLLite
+--    need a union of guests (for guest name), bookings (for current stay), and hotel for hotel name
+--    Cannot union if column name isn't the same? (H_hotelNo vs hotelNo)
+SELECT (*)
+FROM bookings
+WHERE dateFrom <= CURRENT_DATE() AND dateTo >= CURRENT_DATE()
+union
+SELECT guestNo, guestName
+FROM GUEST
+union
+SELECT  hotelNo,hotelName
+FROM HOTEL
+WHERE hotelName = 'Hilton'
 
 --    Count the number of rooms in each hotel in "Las Vegas" along with the name of the hotel.
 
--- Discussion
+--    Discussion
 --    Is it better to regenerate the table or just update it?  Consider the situation when the table has not 20, but 20 million records. 
 --    What are the pros and cons of changing the table vs. re-creating it from scratch? 
 --    What could you do if you were not allowed to re-create a table from scratch, i.e., you can only modify it?
