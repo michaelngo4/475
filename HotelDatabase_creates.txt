@@ -74,6 +74,8 @@ insert into ROOM values (1, 6, 'Single', 99.99);
 insert into ROOM values (1, 7, 'Standard', 167.99);
 insert into ROOM values (1, 8, 'Standard', 134.99);
 insert into ROOM values (1, 9, 'Standard', 59.99);
+insert into ROOM values (1, 10, 'Standard', 59.99);
+insert into ROOM values (2, 10, 'Standard', 59.99);
 
 --guest inserts
 insert into GUEST values (1, "John Doe", "Seattle,Washington");
@@ -148,3 +150,7 @@ GROUP BY guestName;
 --    Is it better to regenerate the table or just update it?  Consider the situation when the table has not 20, but 20 million records. 
 --    What are the pros and cons of changing the table vs. re-creating it from scratch? 
 --    What could you do if you were not allowed to re-create a table from scratch, i.e., you can only modify it?
+--    Can use JOIN or nested queries?
+SELECT hotelName, COUNT(roomNo) FROM HOTEL INNER JOIN ROOM ON Hotel.hotelNo == Room.H_hotelNo 
+WHERE city = 'Las Vegas'
+GROUP BY hotelName;
