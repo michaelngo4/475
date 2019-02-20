@@ -122,7 +122,8 @@ GROUP BY city;
 --    List the hotelNo and average price of ‘Standard’ rooms at each hotel. 
 SELECT H_hotelNo, AVG(price)
 FROM ROOM
-WHERE roomType LIKE '%Standard%';
+WHERE roomType='Standard'
+GROUP BY H_hotelNo;
 
 --    QUERY 8
 --    List the name of all guests currently staying at the Hilton (scroll down for ways of getting the date). 
@@ -139,8 +140,6 @@ hotelName = 'Hilton' AND
 H_hotelNo = hotelNo AND 
 G_guestNo = guestNo
 GROUP BY guestName; 
-
-
 
 --    QUERY 9
 --    Count the number of rooms in each hotel in "Las Vegas" along with the name of the hotel.
