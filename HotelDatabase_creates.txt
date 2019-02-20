@@ -126,10 +126,12 @@ SELECT H_hotelNo, G_guestNo, dateFrom, dateTo,
 guestNo, guestName, 
 hotelNo, hotelName 
 FROM BOOKING, GUEST, HOTEL
-WHERE dateFrom <= CURRENT_DATE() AND dateTo >= CURRENT_DATE() AND
+WHERE dateFrom <= date('now') AND 
+dateTo >= date('now') AND
 hotelName = 'Hilton' AND
 H_hotelNo = hotelNo AND 
-G_guestNo = guestNo; 
+G_guestNo = guestNo
+GROUP BY guestName; 
 
 
 
