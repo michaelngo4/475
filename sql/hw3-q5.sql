@@ -1,0 +1,4 @@
+-- For each project, retrieve the project name, controlling department name, the number of employees and total hours worked per week on the project. 
+-- 	Example format)
+-- (project name, department name, # of employees, hours)
+--how to do hours worked per week?

@@ -1,0 +1,3 @@
+-- Count the number of current bookings at each hotel and display with the hotel name and city. List only the hotels with at least 5 current bookings. 
+--  		Example format)
+-- (# of bookings, hotel name, city)
