@@ -1,0 +1,52 @@
+--By Will Nguyen, Austin Green, Michael Ngo, Collin Kong
+--Dropping tables
+DROP TABLE EMPLOYEE;
+DROP TABLE DRIVER;
+DROP TABLE BUS;
+DROP TABLE BUS_ROUTE;
+DROP TABLE BASE;
+DROP TABLE BUS_ROUTE_STOPS;
+DROP TABLE PARK_AND_RIDE;
+--DROP TABLE TRANS;
+DROP TABLE TRANSIT_CARD;
+
+--Employee TABLE
+CREATE TABLE EMPLOYEE(
+    ID INT NOT NULL,
+    Ssn VARCHAR(10) NOT NULL,
+    E_Name VARCHAR (30) NOT NULL,
+
+
+    PRIMARY KEY(ID),
+    CONSTRAINT ID_range CHECK(ID >= 0),
+    CONSTRAINT Ssn_range CHECK(Ssn = 10),
+    CONSTRAINT Name_range CHECK(E_Name <= 3 AND E_Name <= 30)
+);
+
+CREATE TABLE DRIVER(
+    Employee_ID INT NOT NULL,
+    Driver_ID INT NOT NULL,
+    Miles_Driven INT NOT NULL,
+    PRIMARY KEY(Employee_ID,Driver_ID),
+    FOREIGN KEY(Employee_ID) REFERENCES EMPLOYEE(ID),
+    CONSTRAINT E_ID_range CHECK(Employee_ID >= 1000000 AND Employee_ID <= 9999999),
+    CONSTRAINT D_ID_range CHECK(Driver_ID >= 1000000 AND Driver_ID <= 9999999),
+    CONSTRAINT Mile_min CHECK(Miles_Driven >= 0)    
+);
+
+/*
+-- Room
+-- (roomNo, H_hotelNo, type, price)
+CREATE TABLE ROOM (
+    roomNo INT NOT NULL, 
+    H_hotelNo INT NOT NULL,
+    roomType VARCHAR(10) DEFAULT 'Standard',
+    price decimal(5,2) NOT NULL,
+	primary key(roomNo, H_hotelNo),
+	CONSTRAINT fkHotelNo FOREIGN key (H_hotelNo) References HOTEL (hotelNo),
+	CONSTRAINT price_range CHECK (price BETWEEN 50.00 and 500.00),
+	CONSTRAINT roomNo_range CHECK (roomNo BETWEEN 1 and 9999),
+	CONSTRAINT roomTypes CHECK (roomType IN('Standard', 'Suite', 'Penthouse', 'Double', 'Single'))
+);
+
+*/

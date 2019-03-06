@@ -3,13 +3,15 @@
 -- (department name, # of employees)
 --group by department name, average employee salary,
 
-SELECT D.dname, COUNT(E)
+SELECT D.dname, COUNT(E.salary)
 FROM (
     SELECT D.dname, D.dnumber,
     E.salary, E.dno,
     FROM DEPARTMENT AS D, EMPLOYEE AS E
-    WHERE AVG(E.salary) > 32000
-    E.dno = D.dnumber) as tblavgsalary
+    WHERE E.dno = D.dnumber
+    GROUP BY D.dname
+    HAVING AVG(E.salary) > 32000
+    )
 
 /*
 SELECT 
@@ -20,4 +22,8 @@ INNER JOIN
     categories ON categories.categoryid = products.categoryid
 GROUP BY categoryname
 HAVING AVG(unitprice) > 25;
+
+SELECT D.dname, COUNT(E)
+FROM (SELECT D.dname, D.dnumber
+    E.salary, E.dno)
 */
