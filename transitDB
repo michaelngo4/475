@@ -7,7 +7,7 @@ DROP TABLE BUS_ROUTE;
 DROP TABLE BASE;
 DROP TABLE BUS_ROUTE_STOPS;
 DROP TABLE PARK_AND_RIDE;
---DROP TABLE TRANS;
+DROP TABLE TRANS;
 DROP TABLE TRANSIT_CARD;
 
 --Employee TABLE
@@ -23,6 +23,7 @@ CREATE TABLE EMPLOYEE(
     CONSTRAINT Name_range CHECK(E_Name <= 3 AND E_Name <= 30)
 );
 
+--Driver TABLE
 CREATE TABLE DRIVER(
     Employee_ID INT NOT NULL,
     Driver_ID INT NOT NULL,
@@ -33,6 +34,62 @@ CREATE TABLE DRIVER(
     CONSTRAINT D_ID_range CHECK(Driver_ID >= 1000000 AND Driver_ID <= 9999999),
     CONSTRAINT Mile_min CHECK(Miles_Driven >= 0)    
 );
+
+--Bus TABLE
+CREATE TABLE BUS(
+    Bus_number INT NOT NULL,
+    Driver_ID INT NOT NULL,
+    To_name VARCHAR(30) NULL,
+    From_name VARCHAR(30) NULL,
+    Route_number VARCHAR(30) NULL,
+    Bus_model VARCHAR(30) NULL,
+    Seats_available INT NOT NULL,
+    Miles INT NOT NULL,
+    Base_address VARCHAR(30),
+
+    PRIMARY KEY(Bus_number, Driver_ID, Base_address),
+    FOREIGN KEY(Driver_ID) REFERENCES DRIVER(Driver_ID),
+    FOREIGN KEY(Base_address) REFERENCES BASE(Base_address),
+
+    CONSTRAINT Bus_range CHECK (Bus_number >= 0 AND Bus_number <= 9999999),
+    CONSTRAINT D_ID_range CHECK(Driver_ID >= 1000000 AND Driver_ID <= 9999999),
+    CONSTRAINT To_range CHECK(To_name >= 3 AND To_name <= 30),
+    CONSTRAINT From_range CHECK(From_name >= 3 AND From_name <=30),
+    CONSTRAINT Route_range CHECK(Route_number >= 3 AND Route_number <= 30),
+    CONSTRAINT Model_range CHECK(Bus_model >=3 AND Bus_model <= 30),
+    CONSTRAINT Seats_range CHECK(Seats_available >= 10 AND Seats_available <=100),
+    CONSTRAINT Mile_range CHECK(Miles >= 0)    
+);
+
+--Bus Route Table
+CREATE TABLE BUS_ROUTE(
+    To_name VARCHAR(30) NULL,
+    From_name VARCHAR(30) NULL,
+    Route_number VARCHAR(30) NULL,
+    Days_of_operation VARCHAR(2) DEFAULT 'mo',
+    PRIMARY KEY(To_name, From_name, Route_number),
+
+
+    CONSTRAINT To_range CHECK(To_name >= 3 AND To_name <= 30),
+    CONSTRAINT From_range CHECK(From_name >= 3 AND From_name <=30),
+    CONSTRAINT Route_range CHECK(Route_number >= 3 AND Route_number <= 30),
+    CONSTRAINT Days_range CHECK(Days_of_operation IN('mo', 'tu', 'we', 'th', 'fr', 'sa', 'su'))
+);
+
+--Base Table
+CREATE TABLE BASE(
+    Base_address VARCHAR(30) NOT NULL,
+    Base_name VARCHAR(30) NOT NULL,
+    Parking_spots INT NOT NULL,
+    PRIMARY KEY(Base_address, Base_name),
+    CONSTRAINT address_range CHECK(Base_address >= 3 AND Base_address <= 30),
+    CONSTRAINT name_range CHECK(Base_name >= 3 AND Base_name <= 30),
+    CONSTRAINT parking_range CHECK(Parking_spots >= 0)
+);
+
+--Bus Stop Table
+--CREATE TABLE BUS_STOP();
+
 
 /*
 -- Room
